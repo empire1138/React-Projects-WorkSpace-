@@ -8,6 +8,7 @@ import ImageList from './ImageList';
 class App extends React.Component {
     state = { images: [] };
 
+    // This also works 
     // onSearchSubmit = async (term) => {
     //     const response = await unsplash.get('/search/photos', {
     //         params: { query: term },
@@ -16,16 +17,21 @@ class App extends React.Component {
     //     this.setState({ images: response.data.results });
     // };
 
-    async onSearchSubmit(term) {
+    //This Version works now
+    onSearchSubmit = async (term) => {
         try {
-            const response = await axios.get('https://api.unsplash.com/search/photos', {
+             await axios.get('https://api.unsplash.com/search/photos', {
                 params: { query: term },
                 headers: {
-                    Authorization: 'Client-ID'
+                    Authorization: 'Client-ID '
+                    //API key goes after Client-ID not here for sec
                 }
+            }).then(res => {
+                 console.log(res);
+            this.setState({ images: res.data.results });
+
             })
-            console.log(response);
-            this.setState({ images: response.data.results });
+           
         } catch (error) {
             console.log(error);
         };
